@@ -1,6 +1,6 @@
 const app = require('express')();
 const Scraper = require('images-scraper');
-let google = new Scraper.Google();
+const google = new Scraper.Google();
 
 
 app.get('/', (req, res) => {
@@ -19,7 +19,7 @@ app.get('/images/:searchStringImg', (req, res) => {
 
     google.list({
         keyword: stringImage,
-        num: 5,
+        num: 3,
         detailt: true,
         nightmare: {
             show: false
