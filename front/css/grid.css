@@ -58,6 +58,9 @@
     .grid-container-6-cols-fr {
         grid-template-columns: 16fr 16fr 16fr 16fr 16fr 16fr;
     }
+    .col {
+        grid-column: auto;
+    }
     .col-1 {
         grid-column: 1;
     }
