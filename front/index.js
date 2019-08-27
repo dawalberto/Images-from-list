@@ -8,6 +8,8 @@ function getArrayOfTextarea() {
 
 function getImages() {
 
+    let image, searchImage, div;
+    let containerRes = document.getElementById('container-res')
     document.getElementById('container-res').textContent = ''
     document.getElementById('msgCargando').textContent = 'Cargando...'
     document.getElementById('btnGetImages').disabled = true
@@ -25,51 +27,32 @@ function getImages() {
         // fetch(`https://images-from-list.herokuapp.com/images/${arraySearchImages[i]}`)
         .then(res => res.json())
         .then(resJSON => {
-            resJSON.response.push(arraySearchImages[i])
             arrayResponses.push(resJSON.response)
+            console.log('resJSON.response ', resJSON.response)
+            searchImage = document.createElement('h1')
+            searchImage.classList.add('col-1-3')
+            searchImage.classList.add('justify-self-center')
+            searchImage.textContent = arraySearchImages[i]
+            containerRes.appendChild(searchImage)
+
+            resJSON.response.map(img => {
+                image = document.createElement('img')
+                image.src = img.url
+                image.classList.add('w-100')
+                div = document.createElement('div')
+                div.classList.add('col')
+                div.classList.add('justify-self-center')
+                div.appendChild(image)
+                containerRes.appendChild(div)
+            })
             if (i === arraySearchImages.length - 1) {
                 document.getElementById('msgCargando').textContent = 'Imagenes listas!'
                 document.getElementById('btnGetImages').disabled = false
-                displayImages()
             }
         })
         .catch(err => {
             console.log(err)
         })
-
-    }
-
-}
-
-function displayImages() {
-
-    let searchImage, image, div, col, arrayDivs;
-    let containerRes = document.getElementById('container-res')
-
-    for (let i = 0; i < arrayResponses.length; i++) {
-        arrayDivs = []
-        for(let x = 0; x < arrayResponses[i].length; x++) {
-            if (typeof arrayResponses[i][x] === 'string') {
-                searchImage = document.createElement('h1')
-                searchImage.classList.add('col-1-3')
-                searchImage.classList.add('justify-self-center')
-                searchImage.textContent = arrayResponses[i][x]
-                containerRes.appendChild(searchImage)
-            } else {
-                image = document.createElement('img')
-                image.src = arrayResponses[i][x].url
-                image.classList.add('w-100')
-                // image.width = 200
-                div = document.createElement('div')
-                col = 'col'
-                div.classList.add(col)
-                div.classList.add('justify-self-center')
-                div.appendChild(image)
-                arrayDivs.push(div)
-            }
-            console.log('arrayResponses[i][x] ', arrayResponses[i][x])
-            arrayDivs.map(div => containerRes.appendChild(div))
-        }
 
     }
 
