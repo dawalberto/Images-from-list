@@ -6,6 +6,7 @@ app.use( cors() );
 app.use( require('./routes/routes') );
 
 
-app.listen(3000, () => {
-    console.log('Escuchando por el puerto 3000')
+let port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Escuchando por el puerto ${ port }`)
 })
