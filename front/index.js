@@ -10,7 +10,7 @@ function getImages() {
 
     document.getElementById('container-res').textContent = ''
     document.getElementById('msgCargando').textContent = 'Cargando...'
-    document.getElementById('btnDisplayImages').disabled = true
+    document.getElementById('btnGetImages').disabled = true
     arrayResponses = []
 
     let arraySearchImages = getArrayOfTextarea()
@@ -22,13 +22,14 @@ function getImages() {
     for (let i = 0; i < arraySearchImages.length; i++) {
 
         fetch(`http://localhost:3000/images/${arraySearchImages[i]}`)
+        // fetch(`https://images-from-list.herokuapp.com/images/${arraySearchImages[i]}`)
         .then(res => res.json())
         .then(resJSON => {
             resJSON.response.push(arraySearchImages[i])
             arrayResponses.push(resJSON.response)
             if (i === arraySearchImages.length - 1) {
                 document.getElementById('msgCargando').textContent = 'Imagenes listas!'
-                document.getElementById('btnDisplayImages').disabled = false
+                document.getElementById('btnGetImages').disabled = false
                 displayImages()
             }
         })
@@ -60,12 +61,13 @@ function displayImages() {
                 image.classList.add('w-100')
                 // image.width = 200
                 div = document.createElement('div')
-                col = `col-${x+1}`
+                col = 'col'
                 div.classList.add(col)
                 div.classList.add('justify-self-center')
                 div.appendChild(image)
                 arrayDivs.push(div)
             }
+            console.log('arrayResponses[i][x] ', arrayResponses[i][x])
             arrayDivs.map(div => containerRes.appendChild(div))
         }
 
