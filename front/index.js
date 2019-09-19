@@ -24,11 +24,9 @@ function getImages() {
     for (let i = 0; i < arraySearchImages.length; i++) {
 
         fetch(`http://localhost:3000/images/${arraySearchImages[i]}`)
-        // fetch(`https://images-from-list.herokuapp.com/images/${arraySearchImages[i]}`)
         .then(res => res.json())
         .then(resJSON => {
             arrayResponses.push(resJSON.response)
-            console.log('resJSON.response ', resJSON.response)
             searchImage = document.createElement('h1')
             searchImage.classList.add('col-1-3')
             searchImage.classList.add('justify-self-center')
@@ -37,7 +35,7 @@ function getImages() {
 
             resJSON.response.map(img => {
                 image = document.createElement('img')
-                image.src = img.url
+                image.src = img.img
                 image.classList.add('w-100')
                 div = document.createElement('div')
                 div.classList.add('col')
