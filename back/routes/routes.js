@@ -1,6 +1,5 @@
-const app = require('express')();
-const Scraper = require('images-scraper');
-const google = new Scraper.Google();
+const app = require('express')()
+const google = require('google-parser')
 
 
 app.get('/', (req, res) => {
@@ -17,18 +16,12 @@ app.get('/images/:searchStringImg', (req, res) => {
     let stringImage = req.params.searchStringImg;
     console.log(stringImage)
 
-    google.list({
-        keyword: stringImage,
-        num: 3,
-        detailt: true,
-        nightmare: {
-            show: false
-        }
-    })
+    google.img(stringImage)
     .then(response => {
+        let arayImages = response.slice(0, 3)
         res.json({
             ok: true,
-            response
+            response: arayImages
         })
     })
     .catch(err => {
@@ -37,6 +30,8 @@ app.get('/images/:searchStringImg', (req, res) => {
             err
         })
     })
+
+
 
 })
 
